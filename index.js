@@ -17,6 +17,17 @@ function validateBody(course){
     return Joi.validate(course,schema);
 }
 
+app.delete('/api/course/:id',(req,res)=>{
+     const course = courses.find(c=>c.id === parseInt(req.params.id));
+
+     if(!course){res.status(404).send('Course not found');return;}
+
+     const index = courses.indexOf(course);
+     courses.splice(index,1);
+     res.send(course);
+
+});
+
 app.put('/api/course/:id',(req,res)=>{
     const course = courses.find(c=>c.id === parseInt(req.params.id));
     if(!course){res.status(404).send('Course not found');return;}
